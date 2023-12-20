@@ -19,8 +19,9 @@ use App\Http\Controllers\Api\AuthController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::post('/spies', [SpyController::class, 'store']);
+Route::middleware('auth:sanctum')->group( function () {
+    Route::post('/spies', [SpyController::class, 'store']);
+});
 Route::middleware(['throttle:10,1'])->group(function () {
     Route::get('/spies-random', [SpyController::class, 'getSpiesRandom']);
 });
