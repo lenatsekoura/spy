@@ -45,11 +45,11 @@ class SpyController extends Controller
             if(isset($request->sort['fullname'])) {
                 $spies->orderByRaw('CONCAT(name, surname)');
             } 
-            if(isset($request->sort['created_at'])) {
-                $spies->orderBy('created_at','asc');
+            if(isset($request->sort['dob'])) {
+                $spies->orderBy('dob','asc');
             }            
-            if(isset($request->sort['fullname']) && isset($request->sort['created_at'])) {
-                $spies->orderByRaw('CONCAT(name, surname)')->orderBy('created_at','desc');
+            if(isset($request->sort['fullname']) && isset($request->sort['dob'])) {
+                $spies->orderByRaw('CONCAT(name, surname)')->orderBy('dob','asc');
             }
         }
   
