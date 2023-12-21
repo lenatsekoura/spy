@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Spy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSpyRequest;
 
@@ -32,11 +33,34 @@ class SpyController extends Controller
         if(isset($request->filter)) {
             foreach($request->filter as $key => $value) {
                 if(in_array($key,  $supported_filters)) {
-                    if(isset($request->filter[$key])) {
-                        $spies->where($key, $request->filter[$key]);
+                    if(isset($request->filter[$key]) && $key == 'age_range') {
+                        $spies = $spies->get('dob')
+                            ->map(fn ($spy) => Carbon::parse($spy->dob)->age);
+
+                        $partitions = [
+                            '-18' => $spies->sum(fn ($age) => $age <= 18),
+                            '18-27' => $spies->sum(fn ($age) => $age > 18 && $age <= 27),
+                            '28-65' => $spies->sum(fn ($age) => $age > 27 && $age <= 65),
+                            '65+' => $spies->sum(fn ($age) => $age > 65)
+                        ];
+
+                        return response()->json( $partitions );
+
+                    } elseif (isset($request->filter[$key]) && $key == 'age_exact_match') {
+                        $spies = $spies->get()->groupBy(fn ($spy) => Carbon::parse($spy->dob)->age);
+                        $spies = $spies->get($value);
+
+                        return response()->json( $spies );
+                        
+                    } else {
+                        if(isset($request->filter[$key])) {
+                            $spies->where($key, $request->filter[$key]);
+                        }
                     }
                 } else {
-                    return response()->json( ['message' => 'Not Supported Filter!'], 404 );
+                    return response()->json( [
+                        'message' => 'Filter ( ' . $key . ' ) is not supported!'],
+                        404 );
                 }
             }
         }
@@ -52,7 +76,7 @@ class SpyController extends Controller
                 $spies->orderByRaw('CONCAT(name, surname)')->orderBy('dob','asc');
             }
         }
-  
+
         return response()->json( $spies->paginate(10) );
 
     }
