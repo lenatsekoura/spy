@@ -26,7 +26,9 @@ class StoreSpyRequest extends FormRequest
         return [
             'name' => 'required|unique:spies|max:10', 
             'surname' => 'required|unique:spies|max:10',
-            'dob' => 'required|date_format:Y-m-d',            
+            'dob' => 'required|date_format:Y-m-d',
+            'dod' => 'sometimes|date_format:Y-m-d',
+            'agency' => 'sometimes|not_in:CIA|not_in:MIA',            
         ];
     }
 }
