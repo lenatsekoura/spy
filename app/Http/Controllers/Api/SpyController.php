@@ -50,7 +50,11 @@ class SpyController extends Controller
                         $spies = $spies->get()->groupBy(fn ($spy) => Carbon::parse($spy->dob)->age);
                         $spies = $spies->get($value);
 
-                        return response()->json( $spies );
+                        if ($spies) {                            
+                            return response()->json( $spies );
+                        } else {
+                            return response()->json( ['message' => 'There are not records with this age.'] );
+                        }
                         
                     } else {
                         if(isset($request->filter[$key])) {
