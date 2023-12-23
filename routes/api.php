@@ -19,9 +19,9 @@ use App\Http\Controllers\Api\AuthController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/register', [SpyController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group( function () {
-    Route::post('/login', [SpyController::class, 'login']);
     Route::post('/spies', [SpyController::class, 'store']);
 });
 Route::middleware(['throttle:10,1'])->group(function () {
