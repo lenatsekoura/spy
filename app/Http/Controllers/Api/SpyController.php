@@ -83,7 +83,7 @@ class SpyController extends Controller
 
     public function getSpiesRandom(Request $request)
     {
-        $spies = Spy::all()->random(3);
+        $spies = Spy::all()->random(5);
 
         return response()->json( $spies );
 
