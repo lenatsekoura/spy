@@ -30,6 +30,8 @@ class SpyController extends Controller
         $supported_filters = ['name', 'surname', 'age_range', 'age_exact_match'];
         $spies = Spy::query();
 
+        $msg = 'Results';
+         
         if(isset($request->filter)) {
             foreach($request->filter as $key => $value) {
                 if(in_array($key,  $supported_filters)) {
@@ -59,6 +61,7 @@ class SpyController extends Controller
                     } else {
                         if(isset($request->filter[$key])) {
                             $spies->where($key, $request->filter[$key]);
+                            $msg = 'The filter ' . $key . ' returns these records';
                         }
                     }
                 } else {
@@ -81,7 +84,11 @@ class SpyController extends Controller
             }
         }
 
-        return response()->json( $spies->paginate(10) );
+        return response()->json([
+            $msg,
+            $spies->paginate(10) 
+            ]
+        );
 
     }
 

@@ -24,8 +24,8 @@ class StoreSpyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:spies|max:10', 
-            'surname' => 'required|unique:spies|max:10',
+            'name' => 'required|unique:spies', 
+            'surname' => 'required|unique:spies',
             'dob' => 'required|date_format:Y-m-d',
             'dod' => 'sometimes|date_format:Y-m-d',
             'agency' => 'sometimes|not_in:CIA|not_in:MIA',            
