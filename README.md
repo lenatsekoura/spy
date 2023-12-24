@@ -9,7 +9,7 @@ git clone https://github.com/lenatsekoura/spy.git .
 
 - Make the necessary adjustmnets at .env file 
   
-- Run the migrations by ruuning this command:
+- Run the migrations by running this command:
 
 ```
 php artisan migrate
@@ -61,5 +61,5 @@ By this endpoint a user can get 5(this value is hardcoded) random spies list.
 
 ## Improvements
 It could be used a test database connection for the Feature tests, so the original database would not changed at all.
-More tests for spies list endopoint.
+More tests for spies list endpoint.
 
