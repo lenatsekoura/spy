@@ -36,7 +36,7 @@ In the project it is included a folder named Postman, there is located the postm
 This endpoint creates a user so can use the credentials to make login and get the token for the authentication calls
 
 ### User login endpoint
-By this endpoint a user can use the credentials to make login and get the token for the authentication calls. When we get the access_token and we go the Spy collection at Variables tab and set token variable to access_token value, after that we go to every endpoint at Authorization tab and choose from Type dropdown "Inherit auth from parent".
+By this endpoint a user can use the credentials to make login and get the token for the authentication calls. When we get the access_token we go to the Spy create endpoint at Authorization tab and choose Type: No Auth and paste the token value to the input.
 
 ### Spy create endpoint
 By this endpoint an authenticated user can create a spy record. Acceptable fields at body section: name(required), surname(required), agency(optional), country_opearation(optional), dob(required), dod(optional)
@@ -60,5 +60,6 @@ filter[age_range] and filter[age_exact_match] work autonomously
 By this endpoint a user can get 5(this value is hardcoded) random spies list.
 
 ## Improvements
-It could be used a test database connection for the Feature tests, so the original database would not changed at all
+It could be used a test database connection for the Feature tests, so the original database would not changed at all.
+More tests for spies list endopoint.
 
